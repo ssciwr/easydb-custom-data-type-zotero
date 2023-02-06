@@ -1,0 +1,28 @@
+{
+  "name": "easydb-zotero-datatype-plugin",
+  "version": "0.1.0",
+  "description": "easyDB5 custom data type for Zotero-managed bibliography entries",
+  "keywords": [
+    "easydb"
+  ],
+  "license": "MIT",
+  "contributors": [
+    {
+      "name": "Dominic Kempf",
+      "email": "ssc@iwr.uni-heidelberg.de"
+    }
+  ],
+  "devDependencies": {
+    "coffee-script": "^1.9.0",
+    "webpack": "^3.12.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ssciwr/easydb-zotero-datatype-plugin.git"
+  },
+  "bugs": {
+    "url": "https://github.com/ssciwr/easydb-zotero-datatype-plugin/issues"
+  },
+  "homepage": "https://github.com/ssciwr/easydb-zotero-datatype-plugin",
+  "dependencies": {}
+}

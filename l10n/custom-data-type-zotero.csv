@@ -1,0 +1,5 @@
+key,de-DE,en-US,it-IT,es-ES
+server.config.group.system.zotero.title,Zotero,Zotero,,
+server.config.group.system.zotero.introduction,Mit Hilfe des Zotero Plugins lassen sich auf Zenodo.org extern verwaltete Bibliographien in EasyDB einbinden,Using the Zotero Plugin externally managed bibliographies can be used from within EasyDB,,
+server.config.name.system.zotero,Konfiguration der Zotero Integration,Configuration of the Zotero Integration,,
+server.config.parameter.system.zotero.apikey.label,API Key,API Key,,
