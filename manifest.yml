@@ -1,5 +1,5 @@
 plugin:
-  name: easydb-zotero-datatype-plugin
+  name: custom-data-type-zotero
   version: 0.1
   url: https://github.com/ssciwr/easydb-zotero-datatype-plugin
   displayname:
@@ -8,10 +8,9 @@ plugin:
   server:
     api-version:
       require: 1
-  # webfrontend:
-  #   url: zotero-datatype.js
-  #   l10n: l10n/
-  #   css: zotero-datatype.css
+  webfrontend:
+    url: custom-data-type-zotero.js
+    l10n: l10n/
 
 base_config:
   - name: zotero
@@ -21,7 +20,5 @@ base_config:
         type: text
         position: 0
 
-# custom_types:
-#   zotero:
-#     config:
-#       schema:
+custom_types:
+  zotero: {}

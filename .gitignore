@@ -1,3 +1,9 @@
+# Excludes specific to how easydb-library handles building
+build
+build-stamp-l10n
+src/webfrontend/*.coffee.js
+
+
 # Logs
 logs
 *.log

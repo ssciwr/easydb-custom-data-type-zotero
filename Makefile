@@ -1,27 +1,30 @@
-PLUGIN_NAME = zotero-datatype
-PLUGIN_PATH = easydb-zotero-datatype-plugin
+# Make the coffee executable available on PATH
+PATH := ./node_modules/.bin:$(PATH)
+
+PLUGIN_NAME = custom-data-type-zotero
+PLUGIN_PATH = easydb-custom-data-type-zotero
 
 L10N_FILES = l10n/custom-data-type-zotero.csv
-L10N_GOOGLE_KEY = 1Z3UPJ6XqLBp-P8SUf-ewq4osNJ3iZWKJB83tc6Wrfn0
-L10N_GOOGLE_GID = 480475519
 
 INSTALL_FILES = \
 	$(WEB)/l10n/cultures.json \
 	$(WEB)/l10n/de-DE.json \
 	$(WEB)/l10n/en-US.json \
-	$(WEB)/l10n/es-ES.json \
-	$(WEB)/l10n/it-IT.json \
 	$(JS) \
 	manifest.yml
 
-COFFEE_FILES = src/webfrontend/CustomDataTypeZotero.coffee
+COFFEE_FILES = easydb-library/src/commons.coffee \
+  src/webfrontend/ZoteroAPI.coffee \
+  src/webfrontend/CustomDataTypeZotero.coffee
 
 all: build
 
 include easydb-library/tools/base-plugins.make
 
-build: code css npm_install buildinfojson
+build: code l10n
 
-code: $(JS) $(L10N) $(WEBHOOK_JS)
+l10n: build-stamp-l10n
+
+code: $(JS)
 
 clean: clean-base
