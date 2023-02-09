@@ -1,4 +1,5 @@
 key,de-DE,en-US
+custom.data.type.zotero.mylibrary,Meine Bibliothek,My Library
 custom.data.type.zotero.name,Zotero Bibliographie Eintrag,Zotero Bibliography Entry
 server.config.group.system.zotero.title,Zotero,Zotero
 server.config.group.system.zotero.introduction,Mit Hilfe des Zotero Plugins lassen sich auf Zenodo.org extern verwaltete Bibliographien in EasyDB einbinden,Using the Zotero Plugin externally managed bibliographies can be used from within EasyDB

@@ -37,6 +37,8 @@ class ez5.ZoteroAPI
       # Extract the <userOrGroupPrefix> slugs according to
       # https://www.zotero.org/support/dev/web_api/v3/basics
       # and query the library name for all of them.
+
+      # First, we deal with all shared libraries the key has access to
       for group_id, group_info of keydata.access.groups
         if group_info.library
           userOrGroupPrefix = "groups/" + group_id
@@ -44,6 +46,11 @@ class ez5.ZoteroAPI
             # Actually call the given callback function for each library
             callback(userOrGroupPrefix, libinfo.data.name)
           )
+
+      # Then, we potentially add the user library
+      if keydata.access.user?.library:
+        userOrGroupPrefix = "groups/" + group_id
+          callback(userOrGroupPrefix, $((custom.data.type.zotero.mylibrary)))
     )
 
   @zotero_quicksearch: (userOrGroupPrefix, searchstring, callback) ->
