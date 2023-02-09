@@ -50,10 +50,11 @@ class CustomDataTypeZotero extends CustomDataTypeWithCommons
               # Update actual data
               cdata.conceptURI = btn.getOpt("value")
               cdata.conceptName = btn.getText()
-              #TODO: Do API calls to fill these
               cdata._fulltext = {}
               cdata._standard = {}
+              #TODO: Do an API call to set this one to something meaningful
               cdata._fulltext.text = cdata.conceptName
+              cdata._standard.text = cdata.conceptName
 
               # Update the form
               that.__updateResult(cdata, layout, opts)
