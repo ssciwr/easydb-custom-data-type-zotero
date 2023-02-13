@@ -47,7 +47,7 @@ class ez5.ZoteroAPI
           )
 
       # Then, we potentially add the user library
-      if keydata.access.user?.library:
+      if keydata.access.user?.library
         callback("users/" + keydata.userID, $((custom.data.type.zotero.mylibrary)))
     )
 
