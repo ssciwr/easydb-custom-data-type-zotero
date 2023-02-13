@@ -36,7 +36,7 @@ plugins:
 
 The integration with Zotero is based on the idea that you provide a single API
 key for access to [https://zotero.org](https://zotero.org). Such keys can be generated
-under Settings/API Keys. You should restrict the scope of the key to have only
+under Settings/Feeds API/Create new private key. You should restrict the scope of the key to have only
 read access to exactly those libraries that you want to be available in EasyDB.
 The key can be entered into the base configuration under the "Zotero" tab.
 

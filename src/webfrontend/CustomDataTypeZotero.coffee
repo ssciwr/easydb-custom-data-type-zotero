@@ -27,17 +27,18 @@ class CustomDataTypeZotero extends CustomDataTypeWithCommons
       # Perform API calls to assemble the menu items
       menu_items = []
       ez5.ZoteroAPI.zotero_for_each_library((lib_id, lib_name) ->
-        # Heading with the library name
-        item =
-          label: lib_name
-        menu_items.push item
-        # Dividers render as horizontal bars
-        item =
-          divider: true
-        menu_items.push item
-
         # Search this library for the given term
         ez5.ZoteroAPI.zotero_quicksearch(lib_id, zotero_searchterm, (results) ->
+          if Object.keys(results).length > 0
+            # Heading with the library name
+            item =
+              label: lib_name
+            menu_items.push item
+            # Dividers render as horizontal bars
+            item =
+              divider: true
+            menu_items.push item
+
           for uri, name of results
             item =
               text: name
@@ -50,10 +51,11 @@ class CustomDataTypeZotero extends CustomDataTypeWithCommons
               # Update actual data
               cdata.conceptURI = btn.getOpt("value")
               cdata.conceptName = btn.getText()
-              #TODO: Do API calls to fill these
               cdata._fulltext = {}
               cdata._standard = {}
+              #TODO: Do an API call to set this one to something meaningful
               cdata._fulltext.text = cdata.conceptName
+              cdata._standard.text = cdata.conceptName
 
               # Update the form
               that.__updateResult(cdata, layout, opts)
