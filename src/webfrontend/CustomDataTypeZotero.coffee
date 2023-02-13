@@ -29,7 +29,7 @@ class CustomDataTypeZotero extends CustomDataTypeWithCommons
       ez5.ZoteroAPI.zotero_for_each_library((lib_id, lib_name) ->
         # Search this library for the given term
         ez5.ZoteroAPI.zotero_quicksearch(lib_id, zotero_searchterm, (results) ->
-          if results
+          if results.length > 0
             # Heading with the library name
             item =
               label: lib_name
