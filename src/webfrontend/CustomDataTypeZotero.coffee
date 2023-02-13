@@ -27,17 +27,18 @@ class CustomDataTypeZotero extends CustomDataTypeWithCommons
       # Perform API calls to assemble the menu items
       menu_items = []
       ez5.ZoteroAPI.zotero_for_each_library((lib_id, lib_name) ->
-        # Heading with the library name
-        item =
-          label: lib_name
-        menu_items.push item
-        # Dividers render as horizontal bars
-        item =
-          divider: true
-        menu_items.push item
-
         # Search this library for the given term
         ez5.ZoteroAPI.zotero_quicksearch(lib_id, zotero_searchterm, (results) ->
+          if results
+            # Heading with the library name
+            item =
+              label: lib_name
+            menu_items.push item
+            # Dividers render as horizontal bars
+            item =
+              divider: true
+            menu_items.push item
+
           for uri, name of results
             item =
               text: name
