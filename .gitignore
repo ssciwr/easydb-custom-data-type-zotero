@@ -1,6 +1,7 @@
 # Excludes specific to how easydb-library handles building
 build
 build-stamp-l10n
+src/updater/*.coffee.js
 src/webfrontend/*.coffee.js
 
 

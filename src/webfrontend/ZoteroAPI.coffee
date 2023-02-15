@@ -9,7 +9,12 @@ class ez5.ZoteroAPI
     return config.zotero.apikey
 
   # Base implementation for a GET Request to the Zotero API
-  @__zotero_get_request: (endpoint, params, callback) ->
+  @__zotero_get_request: (endpoint, params, callback, error_callback) ->
+    # If error_callback was not provided, we provide a default that
+    # logs to the console
+    if not error_callback
+      error_callback = () -> console.log($$(custom.data.type.zotero.api-error))
+
     # These headers are required for every single API call
     headers = {
       "Zotero-API-Version": "3"
@@ -25,7 +30,11 @@ class ez5.ZoteroAPI
       url_data: params
 
     # Fire the request and extract its return data
-    xhr.start().done(callback)
+    xhr.start().done(callback).fail(error_callback)
+
+  @zotero_key_information: (callback, error_callback) ->
+    # Access the key information from the Zotero API
+    @__zotero_get_request("keys/" + @__zotero_api_key(), {}, callback, error_callback)
 
   @zotero_for_each_library: (callback) ->
     # Call the given callback once for each available Zotero library.
@@ -33,7 +42,7 @@ class ez5.ZoteroAPI
     that = @
 
     # Query the API for access information about the given key
-    @__zotero_get_request("keys/" + @__zotero_api_key(), {}, (keydata) ->
+    @zotero_key_information((keydata) ->
       # Extract the <userOrGroupPrefix> slugs according to
       # https://www.zotero.org/support/dev/web_api/v3/basics
       # and query the library name for all of them.

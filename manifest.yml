@@ -19,6 +19,19 @@ base_config:
       apikey:
         type: text
         position: 0
+  - name: update_interval_zotero
+    group: update_custom_data_type
+    parameters:
+      days:
+        type: int
+        min: 0
+        default: 0
+        position: 0
 
 custom_types:
-  zotero: {}
+  zotero:
+    update:
+      script: build/updater/zotero-update.js
+      interval_base_config: update_interval_zotero.days
+      timeout: 10
+      batch_size: 100
