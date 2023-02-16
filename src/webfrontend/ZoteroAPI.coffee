@@ -47,13 +47,23 @@ class ez5.ZoteroAPI
       # https://www.zotero.org/support/dev/web_api/v3/basics
       # and query the library name for all of them.
 
-      # First, we deal with all shared libraries the key has access to
-      for group_id, group_info of keydata.access.groups
-        if group_info.library
-          that.__zotero_get_request("groups/" + group_id, {}, (libinfo) ->
-            # Actually call the given callback function for each library
-            callback("groups/" + libinfo.id, libinfo.data.name)
-          )
+      # Find all libraries if the key gives access to "all"
+      if keydata.access.groups?.all
+        that.__zotero_get_request("users/" + keydata.userID + "/groups", {}, (groupsdata) ->
+          for group_info in groupsdata
+            that.__zotero_get_request("groups/" + group_info.id, {}, (libinfo) ->
+              # Actually call the given callback function for each library
+              callback("groups/" + libinfo.id, libinfo.data.name)
+            )
+        )
+      else
+        # First, we deal with all shared libraries the key has access to
+        for group_id, group_info of keydata.access.groups
+          if group_info.library
+            that.__zotero_get_request("groups/" + group_id, {}, (libinfo) ->
+              # Actually call the given callback function for each library
+              callback("groups/" + libinfo.id, libinfo.data.name)
+            )
 
       # Then, we potentially add the user library
       if keydata.access.user?.library

@@ -12,7 +12,7 @@ is deliberate to avoid duplication of efforts in modelling bibliographic metadat
 The plugin is installed and enabled like any other EasyDB plugin:
 
 ```bash
-git clone --recursive https://github.com/dokempf/easydb-custom-data-type-zotero.git /srv/easydb/config/plugin/custom-data-type-zotero
+git clone --recursive https://github.com/ssciwr/easydb-custom-data-type-zotero.git /srv/easydb/config/plugin/custom-data-type-zotero
 cd /srv/easydb/config/plugin/custom-data-type-zotero
 npm install
 make
