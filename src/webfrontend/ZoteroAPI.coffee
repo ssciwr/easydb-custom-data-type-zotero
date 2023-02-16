@@ -56,9 +56,9 @@ class ez5.ZoteroAPI
               callback("groups/" + libinfo.id, libinfo.data.name)
             )
 
-        # Then, we potentially add the user library
-        if keydata.access.user?.library
-          callback("users/" + keydata.userID, $$("custom.data.type.zotero.mylibrary"))
+      # Then, we potentially add the user library
+      if keydata.access.user?.library
+        callback("users/" + keydata.userID, $$("custom.data.type.zotero.mylibrary"))
     )
 
   @zotero_quicksearch: (userOrGroupPrefix, searchstring, callback) ->
