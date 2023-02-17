@@ -4,9 +4,11 @@
 #     whatsoever on this, but the logs are quite clear about it.
 
 class zoteroUpdate
-  __start_update: ({server_config, plugin_config}) ->
-    # We check that the key given in configuration works
-    key = server_config.base.system.zotero.api_key
+  __zotero_api_key: ->
+    return server_config.base.system.zotero.apikey
+
+  __zotero_api_request: (endpoint, callback) ->
+    key = server_config.base.system.zotero.apikey
     headers = {
       "Zotero-API-Version": "3"
       "Zotero-API-Key": key
@@ -14,10 +16,15 @@ class zoteroUpdate
 
     req = new CUI.XHR
       method: "GET"
-      url: "https://api.zotero.org/keys/" + key
+      url: "https://api.zotero.org/" + endpoint
       headers: headers
 
-    req.start().done(
+     req.start().done(callback).fail(() -> ez5.respondError(custom.data.type.zotero.api-error, { "endpoint": endpoint }))
+
+  __start_update: ({server_config, plugin_config}) ->
+    # We check that the key given in configuration works
+
+    @__zotero_api_request("keys/" + @__zotero_api_key(),
       (keydata) ->
         ez5.respondSuccess({
           state: {
@@ -25,10 +32,7 @@ class zoteroUpdate
             "zotero_apikey": key
           }
         })
-      ).fail(() ->
-        ez5.respondError("custom.data.type.zotero.update.error.key-error")
-      )
-
+    )
   __updateData: ({objects, plugin_config, state}) ->
     that = @
 
