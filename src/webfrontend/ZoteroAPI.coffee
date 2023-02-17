@@ -9,11 +9,11 @@ class ez5.ZoteroAPI
       @config = @config.system or @config
 
   # Get the key
-  @__zotero_api_key: ->
+  __zotero_api_key: ->
     return @config.zotero.apikey
 
   # Base implementation for a GET Request to the Zotero API
-  @__zotero_get_request: (endpoint, params, callback, error_callback) ->
+  __zotero_get_request: (endpoint, params, callback, error_callback) ->
     # If error_callback was not provided, we provide a default that
     # logs to the console
     if not error_callback
@@ -36,11 +36,11 @@ class ez5.ZoteroAPI
     # Fire the request and extract its return data
     xhr.start().done(callback).fail(error_callback)
 
-  @zotero_key_information: (callback, error_callback) ->
+  zotero_key_information: (callback, error_callback) ->
     # Access the key information from the Zotero API
     @__zotero_get_request("keys/" + @__zotero_api_key(), {}, callback, error_callback)
 
-  @zotero_for_each_library: (callback) ->
+  zotero_for_each_library: (callback) ->
     # Call the given callback once for each available Zotero library.
     # The callback will be given two arguments (lib_id, lib_name)
     that = @
@@ -74,7 +74,7 @@ class ez5.ZoteroAPI
         callback("users/" + keydata.userID, $$("custom.data.type.zotero.mylibrary"))
     )
 
-  @zotero_quicksearch: (userOrGroupPrefix, searchstring, callback) ->
+  zotero_quicksearch: (userOrGroupPrefix, searchstring, callback) ->
     # Perform a quick search using the Zotero API and call the given
     # callback function with results. The callback will be given
     # one dictionary argument mapping uri -> name
