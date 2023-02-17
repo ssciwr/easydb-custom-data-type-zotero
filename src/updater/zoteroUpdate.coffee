@@ -4,11 +4,7 @@
 #     whatsoever on this, but the logs are quite clear about it.
 
 class zoteroUpdate
-  __zotero_api_key: ->
-    return server_config.base.system.zotero.apikey
-
-  __zotero_api_request: (endpoint, callback) ->
-    key = server_config.base.system.zotero.apikey
+  __zotero_api_request: (key, endpoint, callback) ->
     headers = {
       "Zotero-API-Version": "3"
       "Zotero-API-Key": key
@@ -23,8 +19,8 @@ class zoteroUpdate
 
   __start_update: ({server_config, plugin_config}) ->
     # We check that the key given in configuration works
-
-    @__zotero_api_request("keys/" + @__zotero_api_key(),
+    key = server_config.base.system.zotero.apikey
+    @__zotero_api_request(key, "keys/" + key,
       (keydata) ->
         ez5.respondSuccess({
           state: {
@@ -33,6 +29,7 @@ class zoteroUpdate
           }
         })
     )
+
   __updateData: ({objects, plugin_config, state}) ->
     that = @
 
