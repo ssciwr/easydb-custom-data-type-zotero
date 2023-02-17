@@ -7,11 +7,15 @@ class zoteroUpdate
   __start_update: ({server_config, plugin_config}) ->
     # We check that the key given in configuration works
     key = server_config.base.system.zotero.api_key
+    headers = {
+      "Zotero-API-Version": "3"
+      "Zotero-API-Key": key
+    }
+
     req = new CUI.XHR
+      method: "GET"
       url: "https://api.zotero.org/keys/" + key
-      headers:
-        "Zotero-API-Version": "3"
-        "Zotero-API-Key": key
+      headers: headers
 
     req.start().done(
       (keydata) ->
