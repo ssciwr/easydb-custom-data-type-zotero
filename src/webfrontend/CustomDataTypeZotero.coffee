@@ -24,14 +24,11 @@ class CustomDataTypeZotero extends CustomDataTypeWithCommons
       if zotero_searchterm.length == 0
         return
 
-      # Instantiate the API
-      api = new ez5.ZoteroAPI()
-
       # Perform API calls to assemble the menu items
       menu_items = []
-      api.zotero_for_each_library((lib_id, lib_name) ->
+      ez5.ZoteroAPI.zotero_for_each_library((lib_id, lib_name) ->
         # Search this library for the given term
-        api.zotero_quicksearch(lib_id, zotero_searchterm, (results) ->
+        ez5.ZoteroAPI.zotero_quicksearch(lib_id, zotero_searchterm, (results) ->
           if Object.keys(results).length > 0
             # Heading with the library name
             item =

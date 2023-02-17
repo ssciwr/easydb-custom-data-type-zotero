@@ -1,18 +1,25 @@
+# NB: This file duplicates a lot of logic about how to access the ZoteroAPI.
+#     While unfortunate, this is required because the interface of CUI.XHR
+#     differs between server and client side code. I found no documentation
+#     whatsoever on this, but the logs are quite clear about it.
+
 class zoteroUpdate
   __start_update: ({server_config, plugin_config}) ->
     # We check that the key given in configuration works
-    api = new ez5.ZoteroAPI(server_config.base.system)
-    api.zotero_key_information(
-      ((keydata) -> 
+    key = server_config.base.system.zotero.api_key
+    req = new (CUI.XHR)(url: "https://api.zotero.org/keys/" + key)
+    req.start().done(
+      (keydata) ->
         ez5.respondSuccess({
           state: {
-            "start_update": new Date().toUTCString()
+            "start_update": new Date().toUTCString(),
+            "zotero_apikey": key
           }
-        })),
-      (() ->
-        ez5.respondError("custom.data.type.zotero.update.error.key-error"))
-    )
-  
+        })
+      ).fail(() ->
+        ez5.respondError("custom.data.type.zotero.update.error.key-error")
+      )
+
   __updateData: ({objects, plugin_config, state}) ->
     that = @
 

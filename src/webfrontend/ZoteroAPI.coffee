@@ -1,24 +1,15 @@
 class ez5.ZoteroAPI
-  # Construct an instance that is seeded with configuration if and only if
-  # we are running from server-side code where we need to pass it.
-  constructor: (config) ->
-    if config
-      @config = config
-    else
-      @config = ez5.session.getBaseConfig("plugin", "custom-data-type-zotero")
-      @config = @config.system or @config
 
-  # Get the key
-  __zotero_api_key: ->
-    return @config.zotero.apikey
+  @__zotero_api_key: ->
+    config = ez5.session.getBaseConfig("plugin", "custom-data-type-zotero")
+    # The following is taken from the weblink plugin by Programmfabrik
+    # https://github.com/programmfabrik/easydb-custom-data-type-link/blob/master/src/webfrontend/CustomDataTypeLink.coffee
+    # It seems to be required because of some API transitioning thing.
+    config = config.system or config
+    return config.zotero.apikey
 
   # Base implementation for a GET Request to the Zotero API
-  __zotero_get_request: (endpoint, params, callback, error_callback) ->
-    # If error_callback was not provided, we provide a default that
-    # logs to the console
-    if not error_callback
-      error_callback = () -> console.log($$(custom.data.type.zotero.api-error))
-
+  @__zotero_get_request: (endpoint, params, callback) ->
     # These headers are required for every single API call
     headers = {
       "Zotero-API-Version": "3"
@@ -34,19 +25,15 @@ class ez5.ZoteroAPI
       url_data: params
 
     # Fire the request and extract its return data
-    xhr.start().done(callback).fail(error_callback)
+    xhr.start().done(callback).fail((() -> console.log($$(custom.data.type.zotero.api-error))))
 
-  zotero_key_information: (callback, error_callback) ->
-    # Access the key information from the Zotero API
-    @__zotero_get_request("keys/" + @__zotero_api_key(), {}, callback, error_callback)
-
-  zotero_for_each_library: (callback) ->
+  @zotero_for_each_library: (callback) ->
     # Call the given callback once for each available Zotero library.
     # The callback will be given two arguments (lib_id, lib_name)
     that = @
 
     # Query the API for access information about the given key
-    @zotero_key_information((keydata) ->
+    @__zotero_get_request("keys/" + @__zotero_api_key(), {}, (keydata) ->
       # Extract the <userOrGroupPrefix> slugs according to
       # https://www.zotero.org/support/dev/web_api/v3/basics
       # and query the library name for all of them.
@@ -74,7 +61,7 @@ class ez5.ZoteroAPI
         callback("users/" + keydata.userID, $$("custom.data.type.zotero.mylibrary"))
     )
 
-  zotero_quicksearch: (userOrGroupPrefix, searchstring, callback) ->
+  @zotero_quicksearch: (userOrGroupPrefix, searchstring, callback) ->
     # Perform a quick search using the Zotero API and call the given
     # callback function with results. The callback will be given
     # one dictionary argument mapping uri -> name
