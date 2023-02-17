@@ -1,12 +1,16 @@
 class ez5.ZoteroAPI
+  # Construct an instance that is seeded with configuration if and only if
+  # we are running from server-side code where we need to pass it.
+  constructor: (config) ->
+    if config
+      @config = config
+    else
+      @config = ez5.session.getBaseConfig("plugin", "custom-data-type-zotero")
+      @config = @config.system or @config
 
+  # Get the key
   @__zotero_api_key: ->
-    config = ez5.session.getBaseConfig("plugin", "custom-data-type-zotero")
-    # The following is taken from the weblink plugin by Programmfabrik
-    # https://github.com/programmfabrik/easydb-custom-data-type-link/blob/master/src/webfrontend/CustomDataTypeLink.coffee
-    # It seems to be required because of some API transitioning thing.
-    config = config.system or config
-    return config.zotero.apikey
+    return @config.zotero.apikey
 
   # Base implementation for a GET Request to the Zotero API
   @__zotero_get_request: (endpoint, params, callback, error_callback) ->

@@ -1,7 +1,8 @@
 class zoteroUpdate
   __start_update: ({server_config, plugin_config}) ->
     # We check that the key given in configuration works
-    zotero_key_information(
+    api = new ez5.ZoteroAPI(server_config.base.system)
+    api.zotero_key_information(
       ((keydata) -> 
         ez5.respondSuccess({
           state: {
