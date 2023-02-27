@@ -38,7 +38,7 @@ class zoteroUpdate
 
     objectsToUpdate = []
     objectMap = {}
-    objectUris = []
+    objectURIs = []
 
     # Traverse the given object data to extract all required information
     for object in objects
@@ -55,7 +55,7 @@ class zoteroUpdate
       objectMap[requestURI].push(object)
 
     chunkWorkPromise = CUI.chunkWork.call(@,
-      items: objectUris
+      items: objectURIs
       chunk_size: 1
       call: (items) =>
         uri = items[0]
