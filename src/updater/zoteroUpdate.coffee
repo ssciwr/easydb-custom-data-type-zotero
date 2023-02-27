@@ -33,6 +33,11 @@ class zoteroUpdate
   __updateData: ({objects, plugin_config, state}) ->
     that = @
 
+    objectsToUpdate = []
+    objectMap = {}
+    objectUris = []
+
+    # Traverse the given object data to extract all required information
     for object in objects
       if not (object.identifier and object.data)
         continue
@@ -40,7 +45,43 @@ class zoteroUpdate
       if CUI.util.isEmpty(zoteroURI)
         continue
   
-      console.log("Perform update")
+      requestURI = zoteroURI + "?format=json?include=citation"
+      objectURIs.push(requestURI)
+      if not objectMap[requestURI]
+        objectMap[requestURI] = []
+      objectMap[requestURI].push(object)
+
+    chunkWorkPromise = CUI.chunkWork.call(@,
+      items: objectUris
+      chunk_size: 1
+      call: (items) =>
+        uri = items[0]
+        deferred = new CUI.Deferred()
+        xhr = new (CUI.XHR)(url: uri)
+        xhr.start().done((data, status, statusText) ->
+          citation = data.citation.replace("<span>", "").replace("</span>", "")
+
+          # Construct new cdata object
+          cdata = {}
+          cdata.conceptName = citation
+          cdata.conceptURI = uri
+          cdata._fulltext.text = cdata.conceptName
+          cdata._standard.text = cdata.conceptName
+
+          if that.__hasChanges(objectMap[uri].data, cdata)
+            objectMap[uri].data = cdata
+            objectsToUpdate.push(cdata)
+        ).fail( =>
+          deferred.reject()
+        )
+        return deferred.promise()
+    )
+
+    chunkWorkPromise.done( =>
+      ez5.respondSuccess({payload: objectsToUpdate})
+    ).fail( =>
+      ez5.respondError("custom.data.type.zotero.update.error.generic", {error: "Error connecting to Zotero API"})
+    )
   
   __hasChanges: (object1, object2) ->
     for key in ["conceptName", "conceptURI", "_standard", "_fulltext"]

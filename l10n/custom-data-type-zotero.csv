@@ -2,6 +2,7 @@ key,de-DE,en-US
 custom.data.type.zotero.api-error,Zotero API-Fehler während Operation %(endpoint),Zotero API error during operation %(endpoint)
 custom.data.type.zotero.mylibrary,Meine Bibliothek,My Library
 custom.data.type.zotero.name,Zotero Bibliographie Eintrag,Zotero Bibliography Entry
+custom.data.type.zotero.update.error.generic,Während des Zotero Updates ist ein Fehler aufgetreten: '%(error)',An error occured during the Zotero Update: '%(error)'
 custom.data.type.zotero.update.error.key-error,Der angegebene Zotero API Key ist nicht korrekt,Given Zotero API Key is not correct
 custom.data.type.zotero.update.error.payload-missing,Payload fehlt,Payload is missing
 custom.data.type.zotero.update.error.objects-missing,Für Update: Wert 'objects' fehlt,for update: key 'objects' missing
