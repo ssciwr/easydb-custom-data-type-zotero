@@ -4,7 +4,10 @@
 #     whatsoever on this, but the logs are quite clear about it.
 
 class zoteroUpdate
-  __zotero_api_request: (key, endpoint, callback) ->
+  __zotero_api_request: (key, endpoint, callback, error_callback) ->
+    if not error_callback
+      error_callback = () -> ez5.respondError(custom.data.type.zotero.api-error, { "endpoint": endpoint })
+
     headers = {
       "Zotero-API-Version": "3"
       "Zotero-API-Key": key
@@ -15,7 +18,7 @@ class zoteroUpdate
       url: "https://api.zotero.org/" + endpoint
       headers: headers
 
-     req.start().done(callback).fail(() -> ez5.respondError(custom.data.type.zotero.api-error, { "endpoint": endpoint }))
+     req.start().done(callback).fail(error_callback)
 
   __start_update: ({server_config, plugin_config}) ->
     # We check that the key given in configuration works
@@ -57,7 +60,7 @@ class zoteroUpdate
       call: (items) =>
         uri = items[0]
         deferred = new CUI.Deferred()
-        __zotero_api_request(state.zotero_apikey, uri.replace("https://zotero.org/", ""), (data) ->
+        __zotero_api_request(state.zotero_apikey, uri.replace("https://zotero.org/", ""), ((data) ->
           citation = data.citation.replace("<span>", "").replace("</span>", "")
 
           # Construct new cdata object
@@ -70,8 +73,9 @@ class zoteroUpdate
           if that.__hasChanges(objectMap[uri].data, cdata)
             objectMap[uri].data = cdata
             objectsToUpdate.push(cdata)
-        ).fail( =>
-          deferred.reject()
+
+          deferred.resolve()),
+          ( => deferred.reject())
         )
         return deferred.promise()
     )
