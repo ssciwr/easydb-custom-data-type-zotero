@@ -100,4 +100,22 @@ class CustomDataTypeZotero extends CustomDataTypeWithCommons
       right: null
     .DOM
 
+  # Add search editor
+  __getEditorFields: (cdata) ->
+    that = @
+
+    fields = [
+      {
+        type: CUI.Input
+        class: "commonPlugin_Input"
+        undo_and_changed_support: false
+        form:
+            label: $$("custom.data.type.geonames.modal.form.text.searchbar")
+        placeholder: $$("custom.data.type.geonames.modal.form.text.searchbar.placeholder")
+        name: "searchbarInput"
+      }
+    ]
+
+    return fields
+
 CustomDataType.register(CustomDataTypeZotero)
