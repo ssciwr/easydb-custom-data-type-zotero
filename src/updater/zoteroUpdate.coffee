@@ -60,21 +60,25 @@ class zoteroUpdate
       call: (items) =>
         uri = items[0]
         deferred = new CUI.Deferred()
-        that.__zotero_api_request(state.zotero_apikey, uri.replace("https://zotero.org/", ""), ((data) ->
-          citation = data.citation.replace("<span>", "").replace("</span>", "")
+        that.__zotero_api_request(
+          state.zotero_apikey,
+          uri.replace("https://www.zotero.org/", ""),
+          ((data) ->
+            citation = data.citation.replace("<span>", "").replace("</span>", "")
 
-          # Construct new cdata object
-          cdata = {}
-          cdata.conceptName = citation
-          cdata.conceptURI = uri
-          cdata._fulltext.text = cdata.conceptName
-          cdata._standard.text = cdata.conceptName
+            # Construct new cdata object
+            cdata = {}
+            cdata.conceptName = citation
+            cdata.conceptURI = uri
+            cdata._fulltext.text = cdata.conceptName
+            cdata._standard.text = cdata.conceptName
 
-          if that.__hasChanges(objectMap[uri].data, cdata)
-            objectMap[uri].data = cdata
-            objectsToUpdate.push(cdata)
+            if that.__hasChanges(objectMap[uri].data, cdata)
+              objectMap[uri].data = cdata
+              objectsToUpdate.push(cdata)
 
-          deferred.resolve()),
+            deferred.resolve()
+          ),
           ( => deferred.reject())
         )
         return deferred.promise()
