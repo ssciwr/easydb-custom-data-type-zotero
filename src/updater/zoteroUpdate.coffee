@@ -61,7 +61,7 @@ class zoteroUpdate
         # Craft request URI from stored link
         uri = items[0]
         requestURI = uri.replace("https://www.zotero.org/", "") + "?format=json&include=citation"
-        if not requestURI.startswith("groups")
+        if not requestURI.startsWith("groups")
           # Split the username
           requestURI = requestURI.split(/\/(.*)/)
           requestURI = "users/" + state.userID + requestURI
