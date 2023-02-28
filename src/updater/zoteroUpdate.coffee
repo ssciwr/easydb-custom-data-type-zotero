@@ -75,9 +75,10 @@ class zoteroUpdate
             cdata._fulltext.text = cdata.conceptName
             cdata._standard.text = cdata.conceptName
 
-            if that.__hasChanges(objectMap[uri].data, cdata)
-              objectMap[uri].data = cdata
-              objectsToUpdate.push(cdata)
+            for oldobject in objectMap[uri]
+              if that.__hasChanges(oldobject.data, cdata)
+                oldobject.data = cdata
+                objectsToUpdate.push(oldobject)
 
             deferred.resolve()
           ),
