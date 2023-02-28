@@ -28,7 +28,8 @@ class zoteroUpdate
         ez5.respondSuccess({
           state: {
             "start_update": new Date().toUTCString(),
-            "zotero_apikey": key
+            "zotero_apikey": key,
+            "zotero_userid": keydata.userID
           }
         })
     )
@@ -57,11 +58,18 @@ class zoteroUpdate
       items: objectURIs
       chunk_size: 1
       call: (items) =>
+        # Craft request URI from stored link
         uri = items[0]
+        requestURI = uri.replace("https://www.zotero.org/", "") + "?format=json&include=citation"
+        if not requestURI.startswith("groups")
+          # Split the username
+          requestURI = requestURI.split(/\/(.*)/)
+          requestURI = "users/" + state.userID + requestURI
+
         deferred = new CUI.Deferred()
         that.__zotero_api_request(
           state.zotero_apikey,
-          uri.replace("https://www.zotero.org/", "") + "?format=json&include=citation",
+          requestURI,
           ((data) ->
             citation = data.citation.replace("<span>", "").replace("</span>", "")
 
