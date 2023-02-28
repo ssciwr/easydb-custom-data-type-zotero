@@ -64,7 +64,7 @@ class zoteroUpdate
         if not requestURI.startsWith("groups")
           # Split the username
           requestURI = requestURI.split(/\/(.*)/)
-          requestURI = "users/" + state.userID + requestURI
+          requestURI = "users/" + state.userID + "/" + requestURI
 
         deferred = new CUI.Deferred()
         that.__zotero_api_request(
