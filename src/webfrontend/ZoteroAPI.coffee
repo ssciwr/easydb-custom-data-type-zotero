@@ -68,11 +68,11 @@ class ez5.ZoteroAPI
     parameters = {
       "q": searchstring
       "format": "json"
-      "include": "citation"
+      "include": "bib"
     }
     @__zotero_get_request(userOrGroupPrefix + "/items", parameters, (searchdata) ->
       results = {}
       for searchitem in searchdata
-        results[searchitem.links.alternate.href] = searchitem.citation.replace("<span>", "").replace("</span>", "")
+        results[searchitem.links.alternate.href] = searchitem.bib
       callback(results)
     )
