@@ -70,6 +70,8 @@ class zoteroUpdate
             cdata = {}
             cdata.conceptName = citation
             cdata.conceptURI = uri
+            cdata._fulltext = {}
+            cdata._standard = {}
             cdata._fulltext.text = cdata.conceptName
             cdata._standard.text = cdata.conceptName
 
