@@ -60,7 +60,7 @@ class zoteroUpdate
       call: (items) =>
         uri = items[0]
         deferred = new CUI.Deferred()
-        __zotero_api_request(state.zotero_apikey, uri.replace("https://zotero.org/", ""), ((data) ->
+        that.__zotero_api_request(state.zotero_apikey, uri.replace("https://zotero.org/", ""), ((data) ->
           citation = data.citation.replace("<span>", "").replace("</span>", "")
 
           # Construct new cdata object
