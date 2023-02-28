@@ -48,7 +48,7 @@ class zoteroUpdate
       if CUI.util.isEmpty(zoteroURI)
         continue
   
-      requestURI = zoteroURI + "?format=json?include=citation"
+      requestURI = zoteroURI + "?format=json&include=citation"
       objectURIs.push(requestURI)
       if not objectMap[requestURI]
         objectMap[requestURI] = []
