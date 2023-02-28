@@ -47,12 +47,11 @@ class zoteroUpdate
       zoteroURI = object.data.conceptURI
       if CUI.util.isEmpty(zoteroURI)
         continue
-  
-      requestURI = zoteroURI + "?format=json&include=citation"
-      objectURIs.push(requestURI)
-      if not objectMap[requestURI]
-        objectMap[requestURI] = []
-      objectMap[requestURI].push(object)
+
+      objectURIs.push(zoteroURI)
+      if not objectMap[zoteroURI]
+        objectMap[zoteroURI] = []
+      objectMap[zoteroURI].push(object)
 
     chunkWorkPromise = CUI.chunkWork.call(@,
       items: objectURIs
@@ -62,7 +61,7 @@ class zoteroUpdate
         deferred = new CUI.Deferred()
         that.__zotero_api_request(
           state.zotero_apikey,
-          uri.replace("https://www.zotero.org/", ""),
+          uri.replace("https://www.zotero.org/", "") + "?format=json&include=citation",
           ((data) ->
             citation = data.citation.replace("<span>", "").replace("</span>", "")
 
