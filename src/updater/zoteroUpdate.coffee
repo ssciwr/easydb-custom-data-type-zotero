@@ -63,8 +63,8 @@ class zoteroUpdate
         requestURI = uri.replace("https://www.zotero.org/", "") + "?format=json&include=citation"
         if not requestURI.startsWith("groups")
           # Split the username
-          requestURI = requestURI.split(/\/(.*)/)
-          requestURI = "users/" + state.userID + "/" + requestURI
+          requestURI = requestURI.split(/\/(.*)/)[1]
+          requestURI = "users/" + state.zotero_userid + "/" + requestURI
 
         deferred = new CUI.Deferred()
         that.__zotero_api_request(
