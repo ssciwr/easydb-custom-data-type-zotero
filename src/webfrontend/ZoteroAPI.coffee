@@ -25,7 +25,7 @@ class ez5.ZoteroAPI
       url_data: params
 
     # Fire the request and extract its return data
-    xhr.start().done(callback)
+    xhr.start().done(callback).fail((() -> console.log($$(custom.data.type.zotero.api-error))))
 
   @zotero_for_each_library: (callback) ->
     # Call the given callback once for each available Zotero library.

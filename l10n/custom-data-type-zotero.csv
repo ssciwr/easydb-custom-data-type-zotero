@@ -1,7 +1,16 @@
 key,de-DE,en-US
+custom.data.type.zotero.api-error,Zotero API-Fehler während Operation %(endpoint),Zotero API error during operation %(endpoint)
 custom.data.type.zotero.mylibrary,Meine Bibliothek,My Library
 custom.data.type.zotero.name,Zotero Bibliographie Eintrag,Zotero Bibliography Entry
+custom.data.type.zotero.update.error.generic,Während des Zotero Updates ist ein Fehler aufgetreten: '%(error)',An error occured during the Zotero Update: '%(error)'
+custom.data.type.zotero.update.error.key-error,Der angegebene Zotero API Key ist nicht korrekt,Given Zotero API Key is not correct
+custom.data.type.zotero.update.error.payload-missing,Payload fehlt,Payload is missing
+custom.data.type.zotero.update.error.objects-missing,Für Update: Wert 'objects' fehlt,for update: key 'objects' missing
+custom.data.type.zotero.update.error.objects-not-array,Für Update: Wert 'objects' muss vom Typ 'array' sein,for update: invalid key 'objects': must be array
+custom.data.type.zotero.update.error.invalid-action,'action' ungültig: %(action)s,Invalid action: %(action)s
+custom.data.type.zotero.update.error.payload-key-missing,%(key)s fehlt in der Payload,Missing %(key)s in payload
 server.config.group.system.zotero.title,Zotero,Zotero
 server.config.group.system.zotero.introduction,Mit Hilfe des Zotero Plugins lassen sich auf Zenodo.org extern verwaltete Bibliographien in EasyDB einbinden,Using the Zotero Plugin externally managed bibliographies can be used from within EasyDB
 server.config.name.system.zotero,Konfiguration der Zotero Integration,Configuration of the Zotero Integration
+server.config.parameter.system.update_interval_zotero.days.label,Tage zwischen Updates,Days between updates
 server.config.parameter.system.zotero.apikey.label,API Key,API Key

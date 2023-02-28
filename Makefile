@@ -11,17 +11,25 @@ INSTALL_FILES = \
 	$(WEB)/l10n/de-DE.json \
 	$(WEB)/l10n/en-US.json \
 	$(JS) \
-	manifest.yml
+	manifest.yml \
+	build/updater/zotero-update.js
 
 COFFEE_FILES = easydb-library/src/commons.coffee \
   src/webfrontend/ZoteroAPI.coffee \
   src/webfrontend/CustomDataTypeZotero.coffee
 
+UPDATE_SCRIPT_COFFEE_FILES = src/webfrontend/ZoteroAPI.coffee \
+  src/updater/zoteroUpdate.coffee
+
 all: build
 
 include easydb-library/tools/base-plugins.make
 
-build: code l10n
+build: code l10n buildupdater
+
+buildupdater: $(subst .coffee,.coffee.js,${UPDATE_SCRIPT_COFFEE_FILES})
+	mkdir -p build/updater
+	cat $^ > build/updater/zotero-update.js
 
 l10n: build-stamp-l10n
 
