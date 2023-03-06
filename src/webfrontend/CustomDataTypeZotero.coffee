@@ -80,19 +80,15 @@ class CustomDataTypeZotero extends CustomDataTypeWithCommons
 
   # This creates the output in the detail information of the item
   __renderButtonByData: (cdata) ->
-    # Create the label
-    label = new CUI.Label
-      centered: false
-      multiline: true
-      text: "test"
-
-    label.DOM = cdata.conceptName
-
     # output Button with Name of picked entry and URI
     new CUI.HorizontalLayout
       maximize: false
       left:
-        content: label
+        content:
+          new CUI.Label
+            centered: false
+            multiline: true
+            content: cdata.conceptName
       center:
         content:
           # output Button with Name of picked Entry and Url to the Source
