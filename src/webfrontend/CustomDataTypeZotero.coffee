@@ -47,14 +47,15 @@ class CustomDataTypeZotero extends CustomDataTypeWithCommons
           for uri, name of results
             item =
               text: that.__html2text(name)
-              value: uri
+              value: [uri, name]
             menu_items.push item
 
-          onclick_callback = (results) ->
-            (ev2, btn) ->
+          item_list =
+            keyboardControl: true
+            onClick: (ev2, btn) ->
               # Extract relevant information
-              uri = btn.getOpt("value")
-              name = results[uri]
+              uri = btn.getOpt("value")[0]
+              name = btn.getOpt("value")[1]
               plainname = that.__html2text(name)
 
               # Update actual data
@@ -71,10 +72,6 @@ class CustomDataTypeZotero extends CustomDataTypeWithCommons
               suggest_Menu.hide()
               if that.popover
                 that.popover.hide()
-
-          item_list =
-            keyboardControl: true
-            onClick: onclick_callback(results)
             items: menu_items
 
           # if no hits set "empty" message to menu
