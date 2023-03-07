@@ -29,6 +29,7 @@ class zoteroUpdate
           state: {
             "start_update": new Date().toUTCString(),
             "zotero_apikey": key,
+            "zotero_style": server_config.base.system.zotero.bibstyle,
             "zotero_userid": keydata.userID
           }
         })
@@ -65,7 +66,7 @@ class zoteroUpdate
       call: (items) =>
         # Craft request URI from stored link
         uri = items[0]
-        requestURI = uri.replace("https://www.zotero.org/", "") + "?format=json&include=bib&style=" + plugin_config.bibstyle
+        requestURI = uri.replace("https://www.zotero.org/", "") + "?format=json&include=bib&style=" + state.zotero_style
         if not requestURI.startsWith("groups")
           # Split the username
           requestURI = requestURI.split(/\/(.*)/)[1]
