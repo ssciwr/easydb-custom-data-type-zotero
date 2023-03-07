@@ -17,4 +17,4 @@ server.config.parameter.system.update_interval_zotero.days.label,Tage zwischen U
 server.config.parameter.system.zotero.apikey.label,API Key,API Key
 server.config.parameter.system.zotero.apikey.label|hint,Der API Key kann unter 'Settings/Feeds API/Create new private key' auf zotero.org angelegt werden und sollte möglichst fein granulare Gruppenrechte haben,The API Key can be created under 'Settings/Feeds API/Create new private key' on zotero.org and should have fine grained group permissions.
 server.config.parameter.system.zotero.bibstyle.label,CSL Style,CSL Style
-server.config.parameter.system.zotero.bibstyle.label|hint,"Kurzname, so dass https://www.zotero.org/styles/<kurzname> existiert","Short name such that https://www.zotero.org/styles/<shortname> exists"
+server.config.parameter.system.zotero.bibstyle.label|hint,"Kurzname, so dass https://www.zotero.org/styles/kurzname existiert","Short name such that https://www.zotero.org/styles/shortname exists"
