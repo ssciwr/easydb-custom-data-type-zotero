@@ -1,7 +1,5 @@
 # easydb-custom-data-type-zotero
 
-**The plugin is currently under active development**
-
 This is a plugin for [easyDB 5](http://easydb.de/) with a custom data type
 `ZoteroBibliographyEntry` for references to bibliographic entries managed externally
 on [Zotero](https://zotero.org). The decision to manage the bibliography externally
@@ -39,6 +37,13 @@ key for access to [https://zotero.org](https://zotero.org). Such keys can be gen
 under Settings/Feeds API/Create new private key. You should restrict the scope of the key to have only
 read access to exactly those libraries that you want to be available in EasyDB.
 The key can be entered into the base configuration under the "Zotero" tab.
+
+## Configuring the bibliography style
+
+Bibliography entries are displayed using a configured style. To explore available
+styles, have a look at [available CSL styles](https://www.zotero.org/styles). When
+you have settled for a style, put it into the plugin's base configuration. If you change
+the style retroactively, the periodic updater will adapt to the new style.
 
 ## Issues
 
