@@ -8,6 +8,11 @@ class CustomDataTypeZotero extends CustomDataTypeWithCommons
   # We currently do not display anything in the data model
   getCustomDataOptionsInDatamodelInfo: (custom_settings) -> []
 
+  __html2text: (html) ->
+    tag = document.createElement('div')
+    tag.innerHTML = html
+    tag.innerText
+
   # Query the Zotero API for bibliography items matching our searchstring
   __updateSuggestionsMenu: (cdata, cdata_form, searchstring, input, suggest_Menu, searchsuggest_xhr, layout, opts) ->
     that = @
@@ -41,7 +46,7 @@ class CustomDataTypeZotero extends CustomDataTypeWithCommons
 
           for uri, name of results
             item =
-              text: name.replace(/(<[^<>]*>)/g, "")
+              text: that.__html2text(name)
               value: uri
             menu_items.push item
 
