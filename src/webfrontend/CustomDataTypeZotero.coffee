@@ -41,7 +41,7 @@ class CustomDataTypeZotero extends CustomDataTypeWithCommons
 
           for uri, name of results
             item =
-              text: name
+              text: name.replace(/(<[^<>]*>)/g, "")
               value: uri
             menu_items.push item
 
@@ -50,7 +50,7 @@ class CustomDataTypeZotero extends CustomDataTypeWithCommons
             onClick: (ev2, btn) ->
               # Update actual data
               cdata.conceptURI = btn.getOpt("value")
-              cdata.conceptName = btn.getText()
+              cdata.conceptName = results[btn.getOpt("value")]
               cdata._fulltext = {}
               cdata._standard = {}
               #TODO: Do an API call to set this one to something meaningful
