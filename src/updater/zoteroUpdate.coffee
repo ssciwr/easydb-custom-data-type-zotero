@@ -34,6 +34,11 @@ class zoteroUpdate
         })
     )
 
+  __html2text: (html) ->
+    tag = document.createElement('div')
+    tag.innerHTML = html
+    tag.innerText
+
   __updateData: ({objects, plugin_config, state}) ->
     that = @
 
@@ -60,7 +65,7 @@ class zoteroUpdate
       call: (items) =>
         # Craft request URI from stored link
         uri = items[0]
-        requestURI = uri.replace("https://www.zotero.org/", "") + "?format=json&include=citation"
+        requestURI = uri.replace("https://www.zotero.org/", "") + "?format=json&include=bib&style=" + plugin_config.bibstyle
         if not requestURI.startsWith("groups")
           # Split the username
           requestURI = requestURI.split(/\/(.*)/)[1]
@@ -71,16 +76,16 @@ class zoteroUpdate
           state.zotero_apikey,
           requestURI,
           ((data) ->
-            citation = data.citation.replace("<span>", "").replace("</span>", "")
+            plain = that.__html2text(data.bib)
 
             # Construct new cdata object
             cdata = {}
-            cdata.conceptName = citation
+            cdata.conceptName = data.bib
             cdata.conceptURI = uri
             cdata._fulltext = {}
             cdata._standard = {}
-            cdata._fulltext.text = cdata.conceptName
-            cdata._standard.text = cdata.conceptName
+            cdata._fulltext.text = plain
+            cdata._standard.text = plain
 
             for oldobject in objectMap[uri]
               if that.__hasChanges(oldobject.data, cdata)

@@ -15,3 +15,4 @@ server.config.group.system.zotero.introduction,Mit Hilfe des Zotero Plugins lass
 server.config.name.system.zotero,Konfiguration der Zotero Integration,Configuration of the Zotero Integration
 server.config.parameter.system.update_interval_zotero.days.label,Tage zwischen Updates,Days between updates
 server.config.parameter.system.zotero.apikey.label,API Key,API Key
+server.config.parameter.system.zotero.bibstyle.label,CSL Style (Kurzname, so dass https://www.zotero.org/styles/<kurzname> existiert),CSL Style (Short name such that https://www.zotero.org/styles/<shortname> exists)

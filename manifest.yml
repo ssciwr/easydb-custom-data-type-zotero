@@ -19,6 +19,10 @@ base_config:
       apikey:
         type: text
         position: 0
+      bibstyle:
+        type: text
+        position: 1
+        default: chicago-note-bibliography
   - name: update_interval_zotero
     group: update_custom_data_type
     parameters:
