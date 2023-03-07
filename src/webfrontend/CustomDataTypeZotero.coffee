@@ -8,6 +8,11 @@ class CustomDataTypeZotero extends CustomDataTypeWithCommons
   # We currently do not display anything in the data model
   getCustomDataOptionsInDatamodelInfo: (custom_settings) -> []
 
+  __html2text: (html) ->
+    tag = document.createElement('div')
+    tag.innerHTML = html
+    tag.innerText
+
   # Query the Zotero API for bibliography items matching our searchstring
   __updateSuggestionsMenu: (cdata, cdata_form, searchstring, input, suggest_Menu, searchsuggest_xhr, layout, opts) ->
     that = @
@@ -41,21 +46,26 @@ class CustomDataTypeZotero extends CustomDataTypeWithCommons
 
           for uri, name of results
             item =
-              text: name
-              value: uri
+              text: that.__html2text(name)
+              value: [uri, name]
             menu_items.push item
 
           item_list =
             keyboardControl: true
             onClick: (ev2, btn) ->
+              # Extract relevant information
+              uri = btn.getOpt("value")[0]
+              name = btn.getOpt("value")[1]
+              plainname = that.__html2text(name)
+
               # Update actual data
-              cdata.conceptURI = btn.getOpt("value")
-              cdata.conceptName = btn.getText()
+              cdata.conceptURI = uri
+              cdata.conceptName = name
               cdata._fulltext = {}
               cdata._standard = {}
               #TODO: Do an API call to set this one to something meaningful
-              cdata._fulltext.text = cdata.conceptName
-              cdata._standard.text = cdata.conceptName
+              cdata._fulltext.text = plainname
+              cdata._standard.text = plainname
 
               # Update the form
               that.__updateResult(cdata, layout, opts)
@@ -88,7 +98,7 @@ class CustomDataTypeZotero extends CustomDataTypeWithCommons
           new CUI.Label
             centered: false
             multiline: true
-            text: cdata.conceptName
+            content: cdata.conceptName
       center:
         content:
           # output Button with Name of picked Entry and Url to the Source

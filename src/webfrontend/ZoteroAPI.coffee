@@ -62,17 +62,23 @@ class ez5.ZoteroAPI
     )
 
   @zotero_quicksearch: (userOrGroupPrefix, searchstring, callback) ->
+    # Extract the style from config
+    config = ez5.session.getBaseConfig("plugin", "custom-data-type-zotero")
+    config = config.system or config
+    style = config.zotero.bibstyle
+
     # Perform a quick search using the Zotero API and call the given
     # callback function with results. The callback will be given
     # one dictionary argument mapping uri -> name
     parameters = {
       "q": searchstring
       "format": "json"
-      "include": "citation"
+      "include": "bib",
+      "style": style
     }
     @__zotero_get_request(userOrGroupPrefix + "/items", parameters, (searchdata) ->
       results = {}
       for searchitem in searchdata
-        results[searchitem.links.alternate.href] = searchitem.citation.replace("<span>", "").replace("</span>", "")
+        results[searchitem.links.alternate.href] = searchitem.bib
       callback(results)
     )
