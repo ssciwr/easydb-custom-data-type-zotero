@@ -53,14 +53,19 @@ class CustomDataTypeZotero extends CustomDataTypeWithCommons
           item_list =
             keyboardControl: true
             onClick: (ev2, btn) ->
+              # Extract relevant information
+              uri = btn.getOpt("value")
+              name = results[btn.getOpt("value")]
+              plainname = that.__html2text(name)
+
               # Update actual data
-              cdata.conceptURI = btn.getOpt("value")
-              cdata.conceptName = results[btn.getOpt("value")]
+              cdata.conceptURI = uri
+              cdata.conceptName = name
               cdata._fulltext = {}
               cdata._standard = {}
               #TODO: Do an API call to set this one to something meaningful
-              cdata._fulltext.text = cdata.conceptName
-              cdata._standard.text = cdata.conceptName
+              cdata._fulltext.text = plainname
+              cdata._standard.text = plainname
 
               # Update the form
               that.__updateResult(cdata, layout, opts)
