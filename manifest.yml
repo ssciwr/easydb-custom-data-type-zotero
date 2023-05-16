@@ -39,3 +39,8 @@ custom_types:
       interval_base_config: update_interval_zotero.days
       timeout: 10
       batch_size: 100
+    mapping:
+      conceptName:
+        type: text
+      conceptURI:
+        type: text
