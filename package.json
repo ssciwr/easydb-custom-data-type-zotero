@@ -24,5 +24,7 @@
     "url": "https://github.com/ssciwr/easydb-zotero-datatype-plugin/issues"
   },
   "homepage": "https://github.com/ssciwr/easydb-zotero-datatype-plugin",
-  "dependencies": {}
+  "dependencies": {
+    "html-to-text": "^9.0.5"
+  }
 }

@@ -3,6 +3,8 @@
 #     differs between server and client side code. I found no documentation
 #     whatsoever on this, but the logs are quite clear about it.
 
+{ convert } = require('html-to-text');
+
 class zoteroUpdate
   __zotero_api_request: (key, endpoint, callback, error_callback) ->
     if not error_callback
@@ -34,11 +36,6 @@ class zoteroUpdate
           }
         })
     )
-
-  __html2text: (html) ->
-    tag = document.createElement('div')
-    tag.innerHTML = html
-    tag.innerText
 
   __updateData: ({objects, plugin_config, state}) ->
     that = @
@@ -77,7 +74,7 @@ class zoteroUpdate
           state.zotero_apikey,
           requestURI,
           ((data) ->
-            plain = that.__html2text(data.bib)
+            plain = convert(data.bib)
 
             # Construct new cdata object
             cdata = {}
