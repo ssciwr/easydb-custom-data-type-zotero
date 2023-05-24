@@ -55,8 +55,7 @@ class CustomDataTypeZotero extends CustomDataTypeWithCommons
             onClick: (ev2, btn) ->
               # Extract relevant information
               uri = btn.getOpt("value")[0]
-              name = btn.getOpt("value")[1]
-              plainname = that.__html2text(name)
+              name = that.__html2text(btn.getOpt("value")[1])
 
               # Update actual data
               cdata.conceptURI = uri
@@ -64,8 +63,8 @@ class CustomDataTypeZotero extends CustomDataTypeWithCommons
               cdata._fulltext = {}
               cdata._standard = {}
               #TODO: Do an API call to set this one to something meaningful
-              cdata._fulltext.text = plainname
-              cdata._standard.text = plainname
+              cdata._fulltext.text = name
+              cdata._standard.text = name
 
               # Update the form
               that.__updateResult(cdata, layout, opts)

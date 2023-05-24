@@ -81,7 +81,7 @@ class zoteroUpdate
 
             # Construct new cdata object
             cdata = {}
-            cdata.conceptName = data.bib
+            cdata.conceptName = plain
             cdata.conceptURI = uri
             cdata._fulltext = {}
             cdata._standard = {}
